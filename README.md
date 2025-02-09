@@ -2,7 +2,9 @@
 
 ## 配置git
 ```
-ssh-keygen (生成公钥和私钥)(在github上添加公钥)
+ls ~/.ssh(查看是否有公钥和私钥)
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"(生成公钥和私钥)(在github上添加公钥)
+ssh -T git@github.com(测试连接)
 git init(初始化)
 git config --global user.name "your name"(用户名要和github一致)
 git config --global user.email "your email"(邮箱要和github一致)
