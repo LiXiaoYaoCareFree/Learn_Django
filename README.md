@@ -89,13 +89,14 @@ URL就是用户输入的网址
 
 ## Django框架视图和模板
 
-### 基于函数视图实现登录功能
+### 1.基于函数视图实现登录功能
 views(视图):
 一个视图可以称之为函数或者视图类, 本质上是一个python函数或者是类, 用于处理用户的请求并返回响应。
 ![views(视图)](views.jpg)
 分为: FBV(基于函数的视图)和CBV(基于类的视图)
 
-### 基于类的视图实现登录功能
+### 2.基于类的视图实现登录功能
+
 
 ## HttpRequest请求对象
 ```
@@ -129,4 +130,67 @@ def my_view(request, parameter_name):
 6. 获取请求头中的参数:
 ```
 value = request.headers.get('Header-Name', default_value)
+```
+
+
+
+### GET和POST的区别
+
+`GET` 请求和 `POST` 请求是 HTTP 协议中的两种常见请求方法，它们的主要区别如下：  
+
+|  区别点  | `GET` 请求 | `POST` 请求 |
+|---------|----------|------------|
+| **用途** | 主要用于获取数据，不会对服务器资源产生影响 | 主要用于提交数据，通常用于修改服务器上的资源 |
+| **参数传递** | 参数拼接在 URL 中，形式如 `?key=value&key2=value2` | 参数放在请求体（body）中，通常以 JSON、表单等格式传输 |
+| **可见性** | 参数直接暴露在 URL 中，容易被看到 | 参数在请求体中，不直接暴露在 URL |
+| **安全性** | 安全性较低，数据可能被缓存、记录到浏览器历史中 | 相对更安全，数据不会出现在 URL 中 |
+| **数据长度限制** | 受 URL 长度限制（不同浏览器和服务器限制不同，通常不超过 2000 字符） | 没有长度限制，适合传输大数据 |
+| **是否可缓存** | 可以被浏览器或代理服务器缓存 | 默认不会被缓存 |
+| **幂等性** | 幂等（同样的请求多次执行，结果相同） | 非幂等（多次执行可能导致服务器数据变化） |
+| **书签支持** | 可以存为书签，方便访问 | 不能存为书签 |
+
+---
+
+### **示例：GET 请求**
+```python
+import requests
+
+url = "https://api.example.com/data"
+params = {"id": 123, "name": "LLY"}
+
+response = requests.get(url, params=params)
+print(response.text)
+```
+发送的请求 URL 可能是：
+```
+https://api.example.com/data?id=123&name=LLY
+```
+
+---
+
+### **示例：POST 请求**
+```python
+import requests
+
+url = "https://api.example.com/submit"
+data = {"username": "LLY", "password": "123456"}
+
+response = requests.post(url, json=data)  # 发送 JSON 数据
+print(response.text)
+```
+请求的数据不会出现在 URL，而是在请求体中发送。
+
+---
+
+### **总结**
+- **`GET` 适用于查询数据（如查询天气、获取用户信息）。**
+- **`POST` 适用于提交数据（如登录、上传文件、提交表单）。**
+
+
+
+
+## HttpResponse响应对象
+```
+1. HttpResponse
+2. JsonResponse
 ```

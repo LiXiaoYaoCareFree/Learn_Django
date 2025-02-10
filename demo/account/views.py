@@ -7,7 +7,10 @@ def login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        return HttpResponse(f'用户名{username}密码{password}')
+        headers = {
+            'token': '123456'
+        }
+        return HttpResponse(f"用户名{username}密码{password}", headers=headers)
     elif request.method == 'GET':
         print(request.META.get('REMOTE_ADDR'))
         print(request.headers.get('User-Agent'))
