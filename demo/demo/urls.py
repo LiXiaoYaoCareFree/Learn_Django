@@ -20,6 +20,7 @@ from app01.views import helloworld, article_create, article_detail, phone_number
 
 urlpatterns = [
     path('hello/', helloworld),
+    path('account/', include('account.urls')),
     path('article/', include('app01.urls')),
     path('admin/', admin.site.urls),
 ]
