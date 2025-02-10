@@ -96,3 +96,37 @@ views(视图):
 分为: FBV(基于函数的视图)和CBV(基于类的视图)
 
 ### 基于类的视图实现登录功能
+
+## HttpRequest请求对象
+```
+请求对象的主要内容：
+1. 获取请求头
+2. 获取请求参数
+```
+### 获取请求参数
+1. 获取GET参数:
+```
+value = request.GET.get('parameter_name', default_value)
+```
+2. 获取POST参数:
+```
+value = request.POST.get('parameter_name', default_value)
+```
+3. 获取URL参数(例如在URL中使用的参数):
+```
+value = request.GET.get('parameter_name', default_value)
+```
+4. 获取请求体中的JSON参数:
+```
+data = json.loads(request.body)
+value = data.get('parameter_name', default_value)
+```
+5. 获取路径参数(例如在URL路径中的参数):
+```
+def my_view(request, parameter_name):
+# 使用parameter_name参数
+```
+6. 获取请求头中的参数:
+```
+value = request.headers.get('Header-Name', default_value)
+```
