@@ -226,4 +226,211 @@ DTL, Jinja2
 {% endfor %}
 ```
 4. 模板过滤器
+```
+基础语法:
+{{ value | filter_name:params }}
+常用的过滤器:
+upper urlencode length default floatformat
+safe random truncatechars
+```
 5. 模板继承和包含
+```
+# extends 继承
+# include 包含
+```
+
+
+
+
+## Django框架模型
+### 什么是ORM:
+```
+ORM(Object-Relational Mapping)就是对象关系映射
+web开发就是在面向数据库编程
+ORM就是将面向对象的编程和面向数据库的编程进行了映射
+且不需要使用SQL语句进行数据库操作
+```
+
+DataBase                     面向对象
+
+数据表                        类
+
+数据行                        对象
+
+表中的字段                    属性
+
+
+## 配置mysql数据库
+```
+1. mysql -u root -p
+# 输入密码
+
+2. create database django_demo;
+# 连接mysql
+
+3. 安装mysql引擎
+pip install pymysql
+
+
+4. 打开demo\__init__.py文件
+修改DATABASES配置
+import pymysql
+pymysql.install_as_MySQLdb()
+
+5. 执行数据库迁移
+# 生成迁移文件
+python manage.py makemigrations
+# 执行迁移
+python manage.py migrate
+
+# 修改settings.py文件配置数据库
+DATABASES = {
+    'default':{
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django_demo',
+        'HOST': '127.0.0.1',
+        'USER': 'root',
+        'PASSWORD': '123456',
+    }
+}
+```
+
+
+## 创建模型
+```
+1. 安装应用
+在settings.py中的INSTALLED_APPS下添加应用名
+2. 模型文件
+在app下创建models.py文件
+
+在models.py文件中创建模型类
+```
+
+
+![字段类型(1).jpg](<字段类型 (1).jpg>)
+![字段类型(2).jpg](<字段类型 (2).jpg>)
+
+## 设置meta元数据
+
+## ORM新增数据
+```
+# 方式1: sava()保存
+python manage.py makemigrations
+python manage.py migrate
+python manage.py shell
+
+from account.models import User
+user_obj = User(username='admin', password='123456',email='admin@qq.com')
+user_obj.save()
+
+# 方式2: create()新增数据
+user2 = User.objects.create(username='zhangsan',password='11111',email='zhangsan@qq.com')
+
+# 方式3: bulk_create()批量新增数据
+user3 = User(username='lisi',password='222222', email='lisi@qq.com')
+user4 = User(username='wangwu',password='2223333', email='wangwu@qq.com')
+user_list = [user3, user4]
+User.objects.bulk_create(user_list)
+
+# 方式4: 外键关联
+from app01.models import Article
+from datetime import datetime 
+now = datetime.now()
+user_obj.username
+article1 = Article(id=1, title='第一篇文章',content='the first', publish_date=now,user=user_obj)
+article1.save()
+
+
+# create read update delete
+```
+
+
+
+
+
+## ORM查询数据
+```
+# 1. all(): 返回所有数据
+user = User.objects.all()
+user
+
+for item in user:
+    print(item.username)
+
+
+# 2. get(**kwargs): 返回符合条件的一条数据
+user = User.objects.get(username='zhangsan')
+user
+user.id, user.username, user.password, user.email
+
+user = User.objects.get(pk=1)
+user
+
+user = User.objects.first()
+user = User.objects.last()
+
+User.objects.filter(id__gt=1)
+
+# 3. filter(**kwargs): 返回符合条件的所有数据
+```
+
+
+## ORM查询条件
+· 相等/等于/布尔条件
+```
+· gt: 大于某个值
+· gte: 大于等于某个值
+· lt: 小于某个值
+· lte: 小于等于某个值
+· isnull: 是否为null
+```
+```
+User.objects.filter(id__lte=3)
+User.objects.filter(username__isnull=True)
+```
+· 是否包含**字符串
+```
+· icontains: 不区分大小写
+User.objects.filter(username__icontains='AN')
+User.objects.filter(username__contains='an')
+User.objects.filter(id__in=[2,4,6])
+
+· contains: 包含**值
+· in: 在**选项(列表)之内
+```
+· 以**开始/结束
+· 日期及时间
+· 外键关联
+
+
+
+
+## ORM多条件查询
+```
+· 方式1: filter()指定多个条件
+User.objects.filter(created_at__minute=44).filter(username__contains='an')
+
+· 方式2: &运算符
+User.objects.filter(created_at__minute=44)&User.objects.filter(username__contains='an')
+
+· 方式3: Q()函数的使用，支持&(且) 和 | (或)
+from django.db.models import Q
+User.objects.filter(Q(created_at__minute=44)|Q(username__contains='an'))
+```
+
+## ORM更新数据
+```
+· 方式1: save()修改单条数据
+user.save()
+· 方式2: update()批量修改数据
+user = User.objects.filter(id=2).update(password='2222',email='zhangsan@163.com')
+
+user2 = User.objects.get(id=2)
+Article.objects.filter(id=1).update(user=user2)
+· 方式3: bulk_update()批量修改数据
+
+```
+
+
+
+

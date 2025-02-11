@@ -30,9 +30,13 @@ def list(request):
         'age': 18,
         'programming_language': ['python', 'java', 'c++'],
     }
+    content = """
+
+    """
     return render(request, 'list.html', {
         'author': author,
         'number': article_number,
         'article_list': article_list,
         'info': info,
+        'content': content,
     })
