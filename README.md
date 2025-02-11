@@ -194,3 +194,36 @@ print(response.text)
 1. HttpResponse
 2. JsonResponse
 ```
+
+
+
+## 模板引擎和配置(Template)
+Django中的模板就是用来动态生成HTML页面的。
+1. 模板引擎和配置
+```
+DTL, Jinja2
+```
+2. 模板中的变量
+```
+数字，字符串，列表，元组，字典，集合，对象
+```
+3. 模板标签
+```
+· 循环控制
+· 条件控制
+· 模板注释
+· URL解析
+· with语句块
+· 时间显示
+· 继承语包含
+```
+```
+# 循环列表或元组
+{% for item in my_list %}
+<li>内容</li>
+{% empty %}
+<li>暂无内容</li>
+{% endfor %}
+```
+4. 模板过滤器
+5. 模板继承和包含

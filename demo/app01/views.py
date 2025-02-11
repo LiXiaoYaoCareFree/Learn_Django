@@ -15,3 +15,24 @@ def article_detail(request, article_id, title):
 
 def phone_number(request, phone_number):
     return HttpResponse(f'手机号码是{phone_number}')
+
+
+def list(request):
+    author = 'andy'
+    article_number = 20
+    article_list = [
+        '第一篇文章: 什么是Django',
+        '第二篇文章: Django的MTV',
+        '第三篇文章: Django的请求与响应',
+    ]
+    info = {
+        'name': author,
+        'age': 18,
+        'programming_language': ['python', 'java', 'c++'],
+    }
+    return render(request, 'list.html', {
+        'author': author,
+        'number': article_number,
+        'article_list': article_list,
+        'info': info,
+    })

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views import View
 
 # Create your views here.
@@ -10,7 +10,10 @@ def login(request):
         headers = {
             'token': '123456'
         }
-        return HttpResponse(f"用户名{username}密码{password}", headers=headers)
+        #return HttpResponse(f"用户名{username}密码{password}", 
+        #        content_type="text/html;charset=utf-8",
+        #        status=404, headers=headers)
+        return JsonResponse({'code': 200, 'msg': '登录成功'})
     elif request.method == 'GET':
         print(request.META.get('REMOTE_ADDR'))
         print(request.headers.get('User-Agent'))
