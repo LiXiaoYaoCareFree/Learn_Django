@@ -38,8 +38,8 @@ pip install django
 
 ## 创建django
 ```
-django-admin startproject demo
-# 创建django项目
+django-admin startproject demo .
+# 在当前路径下创建django项目
 python manage.py runserver
 # 运行django
 
